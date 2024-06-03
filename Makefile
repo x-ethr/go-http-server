@@ -65,7 +65,7 @@ dirty-contents 			= $(shell git diff --shortstat 2>/dev/null 2>/dev/null | tail 
 # Package-Specific Target(s)
 # ------------------------------------------------------------------------------------
 
-all :: patch-release update
+all :: patch-release
 
 tidy:
 	@go mod tidy

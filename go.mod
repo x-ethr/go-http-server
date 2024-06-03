@@ -1,4 +1,4 @@
-module github.com/x-ethr/go-http-server/v1
+module github.com/x-ethr/go-http-server/v2
 
 go 1.22.3
 
