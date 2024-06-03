@@ -1,6 +1,6 @@
 module github.com/x-ethr/go-http-server/v1
 
-go 1.22
+go 1.22.3
 
 require golang.org/x/term v0.20.0
 
