@@ -43,7 +43,7 @@ type Helper interface {
 // 5. Logs the data for debugging purposes.
 // 6. Returns nil if there were no exceptions generated.
 // The function returns a string message, a map of Validators, and an error.
-func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data interface{}) (string, Validators, error) {
+func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data interface{}) (Validators, error) {
 	// invalid describes an invalid argument passed to `Struct`, `StructExcept`, StructPartial` or `Field`
 	var invalid *validator.InvalidValidationError
 
@@ -54,7 +54,7 @@ func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data i
 			slog.String("error", e.Error()),
 		)
 
-		return "Valid JSON Required as Input", nil, e
+		return nil, e
 	}
 
 	// Validate "data" using "validation".
@@ -64,7 +64,7 @@ func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data i
 			// Log the issue and return an Internal server error exception.
 			slog.ErrorContext(ctx, "Invalid Validator", slog.String("error", e.Error()))
 
-			return "Internal Validation Error", nil, e
+			return nil, e
 		}
 
 		// Loop through the validation errors, logging each one.
@@ -95,15 +95,15 @@ func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data i
 		}
 
 		if typecast, ok := data.(Helper); ok {
-			return "", typecast.Help(), e
+			return typecast.Help(), e
 		}
 
-		return "", nil, e
+		return nil, e
 	}
 
 	// If no exception was generated, log the "data" for debugging purposes.
 	// slog.Log(ctx, slog.LevelDebug, "Request", logging.Structure("body", data))
 
 	// Return nil if there were no exceptions generated.
-	return "", nil, nil
+	return nil, nil
 }
