@@ -27,7 +27,7 @@ func Handle(next http.Handler) http.Handler {
 			slog.ErrorContext(ctx, "Error Writing Response", slog.String("error", e.Error()))
 		}
 
-		slog.InfoContext(ctx, "Response", slog.String("path", r.URL.Path), slog.Int64("size", size), slog.Int("status", instance.status))
+		slog.InfoContext(ctx, "Response", slog.String("path", r.URL.Path), slog.Int64("size", size), slog.Int("status", instance.status), slog.String("Content-Type", w.Header().Get("Content-Type")))
 	})
 }
 
