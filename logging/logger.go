@@ -252,7 +252,7 @@ func (h *Handler) Handle(ctx context.Context, record slog.Record) error {
 	}
 
 	var buffer []byte
-	if record.Message == "HTTP(s) Request" || record.Message == "Middleware" || record.Message == "Response Writer" {
+	if record.Message == "HTTP(s) Request" || record.Message == "Middleware" || record.Message == "Response" {
 		var e error
 
 		buffer, e = json.Marshal(fields)
