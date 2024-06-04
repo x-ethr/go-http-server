@@ -2,9 +2,9 @@
 
 ## Documentation
 
-Official `godoc` documentation (with examples) can be found at the [Package Registry](https://pkg.go.dev/github.com/x-ethr/go-http-server).
+Official `godoc` documentation (with examples) can be found at the [Package Registry](https://pkg.go.dev/github.com/x-ethr/go-http-server/v2).
 
-- See https://pkg.go.dev/github.com/x-ethr/go-http-server for additional documentation.
+- See https://pkg.go.dev/github.com/x-ethr/go-http-server/v2 for additional documentation.
 - Please refer to the [code examples](./example_test.go) for additional usage and implementation details.
 
 ## Usage
