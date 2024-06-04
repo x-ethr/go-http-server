@@ -49,6 +49,10 @@ func Validate(ctx context.Context, v *validator.Validate, body io.Reader, data i
 
 	// Unmarshal request-body into "data".
 	if e := json.NewDecoder(body).Decode(&data); e != nil {
+		if typecast, ok := data.(Helper); ok {
+			return typecast.Help(), e
+		}
+
 		// Log an issue unmarshalling the body and return a Bad request exception.
 		slog.Log(ctx, slog.LevelWarn, "Unable to Unmarshal Request Body",
 			slog.String("error", e.Error()),
