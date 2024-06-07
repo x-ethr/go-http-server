@@ -10,7 +10,7 @@ var Health http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
 		"status": "ok",
 	}
 
-	w.Header().Set("Content-Type", "Application/JSON")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
 	json.NewEncoder(w).Encode(response)
