@@ -69,9 +69,9 @@ func Standard(w http.ResponseWriter, name, value string, options ...Variadic) {
 		Domain:   domain,
 		Expires:  time.Now().Add(3 * time.Hour),
 		MaxAge:   86400,
-		Secure:   true,                    // Ensure the cookie is sent only over HTTPS
-		HttpOnly: false,                   // Allow JavaScript access to the cookie
-		SameSite: http.SameSiteStrictMode, // Enforce SameSite policy
+		Secure:   true,                 // Ensure the cookie is sent only over HTTPS
+		HttpOnly: false,                // Allow JavaScript access to the cookie
+		SameSite: http.SameSiteLaxMode, // Enforce SameSite policy
 	}
 
 	http.SetCookie(w, &cookie)
