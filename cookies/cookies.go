@@ -9,6 +9,9 @@ import (
 
 type Options struct {
 	Domain string
+	Secure bool
+	HTTP   bool          // HTTP represents HTTP-Only Cookie settings
+	Site   http.SameSite // Site represents Same-Site cookie settings
 }
 
 type Variadic func(o *Options)
@@ -47,7 +50,7 @@ func Secure(w http.ResponseWriter, name, value string, options ...Variadic) {
 	http.SetCookie(w, &cookie)
 }
 
-func Standard(w http.ResponseWriter, name, value string, options ...Variadic) {
+func New(w http.ResponseWriter, name, value string, options ...Variadic) {
 	var o = settings()
 	for _, option := range options {
 		option(o)
@@ -62,6 +65,10 @@ func Standard(w http.ResponseWriter, name, value string, options ...Variadic) {
 		}
 	}
 
+	secure := o.Secure
+	httponly := o.HTTP
+	samesite := o.Site
+
 	cookie := http.Cookie{
 		Name:     name,
 		Value:    value,
@@ -69,9 +76,9 @@ func Standard(w http.ResponseWriter, name, value string, options ...Variadic) {
 		Domain:   domain,
 		Expires:  time.Now().Add(3 * time.Hour),
 		MaxAge:   86400,
-		Secure:   true,                 // Ensure the cookie is sent only over HTTPS
-		HttpOnly: false,                // Allow JavaScript access to the cookie
-		SameSite: http.SameSiteLaxMode, // Enforce SameSite policy
+		Secure:   secure,
+		HttpOnly: httponly,
+		SameSite: samesite,
 	}
 
 	http.SetCookie(w, &cookie)
