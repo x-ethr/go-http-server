@@ -83,3 +83,37 @@ func New(w http.ResponseWriter, name, value string, options ...Variadic) {
 
 	http.SetCookie(w, &cookie)
 }
+
+func Delete(w http.ResponseWriter, name string, options ...Variadic) {
+	var o = settings()
+	for _, option := range options {
+		option(o)
+	}
+
+	domain := o.Domain
+	if domain == "" {
+		if v := os.Getenv("CI"); strings.ToLower(v) != "true" {
+			domain = ""
+		} else if v := os.Getenv("NAMESPACE"); v == "development" {
+			domain = ""
+		}
+	}
+
+	secure := o.Secure
+	httponly := o.HTTP
+	samesite := o.Site
+
+	cookie := http.Cookie{
+		Name:     name,
+		Value:    "",
+		Path:     "/",
+		Domain:   domain,
+		Expires:  time.Now(),
+		MaxAge:   -1,
+		Secure:   secure,
+		HttpOnly: httponly,
+		SameSite: samesite,
+	}
+
+	http.SetCookie(w, &cookie)
+}
